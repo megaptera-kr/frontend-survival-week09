@@ -3,3 +3,4 @@
 /.parcel-cache/
 /coverage/
 /output/
+*.d.ts
