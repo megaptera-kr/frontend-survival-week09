@@ -57,8 +57,28 @@ describe('routes', () => {
 
   context('when the current path is “/products/{id}”', () => {
     // TODO #1: 상품 ID일 때
+    describe('with correct productId', () => {
+      it('renders the product detail page', async () => {
+        renderRouter('/products/product-01');
+
+        screen.getByText(/Loading/);
+
+        await waitFor(() => {
+          screen.getByText(/Product #1/);
+        });
+      });
+    });
 
     // TODO #2: 상품 ID가 올바르지 않을 때
+    describe('with incorrect productId', () => {
+      it('renders "not found" message', async () => {
+        renderRouter('/products/xxx');
+
+        await waitFor(() => {
+          screen.getByText(/Error/);
+        });
+      });
+    });
   });
 
   context('when the current path is “/cart”', () => {
