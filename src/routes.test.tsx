@@ -26,14 +26,22 @@ describe('routes', () => {
     it('renders the home page', async () => {
       renderRouter('/');
 
-      // await waitFor(() => {
-      //   screen.getByText(/Category #1/);
-      // });
+      await waitFor(() => {
+        screen.getByText(/Hello, world!/);
+      });
     });
   });
 
   context('when the current path is “/products”', () => {
     // TODO #1: category ID가 없을 때
+    describe('without categoryId', () => {
+      it('renders all products list', async () => {
+        renderRouter('/products');
+        await waitFor(() => {
+          screen.getByText(/Product #1/);
+        });
+      });
+    });
 
     // TODO #2: category ID가 있을 때
   });
