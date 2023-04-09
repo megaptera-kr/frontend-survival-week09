@@ -14,7 +14,7 @@ export default function ProductListPage() {
   return (
     <div>
       <h2>Products</h2>
-      <Products products={products}/>
+      <Products products={products} />
     </div>
   );
 }

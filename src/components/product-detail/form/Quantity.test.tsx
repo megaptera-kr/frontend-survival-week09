@@ -25,6 +25,24 @@ describe('Quantity', () => {
   });
 
   // TODO #1: + 버튼이 눌렸을 때
+  context('when “+” button is clicked', () => {
+    it('calls “changeQuantity” action', () => {
+      render(<Quantity />);
+
+      fireEvent.click(screen.getByRole('button', { name: '+' }));
+
+      expect(store.changeQuantity).toBeCalledWith(7 + 1);
+    });
+  });
 
   // TODO #2: - 버튼이 눌렸을 때
+  context('when “-” button is clicked', () => {
+    it('calls “changeQuantity” action', () => {
+      render(<Quantity />);
+
+      fireEvent.click(screen.getByRole('button', { name: '-' }));
+
+      expect(store.changeQuantity).toBeCalledWith(7 - 1);
+    });
+  });
 });

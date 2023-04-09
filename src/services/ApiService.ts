@@ -44,7 +44,20 @@ export default class ApiService {
     const { data } = await this.instance.get('/cart');
     return data;
   }
+
   // TODO #5: addProductToCart
+  async addProductToCart({ productId, options, quantity }:{
+    productId: string;
+    options: {
+      id: string;
+      itemId: string;
+    }[];
+    quantity: number;
+  }):Promise<void> {
+    await this.instance.post('/cart/line-items', {
+      productId, options, quantity,
+    });
+  }
 }
 
 export const apiService = new ApiService();
