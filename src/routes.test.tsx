@@ -83,5 +83,12 @@ describe('routes', () => {
 
   context('when the current path is “/cart”', () => {
     // TODO: cart 페이지 라우팅 테스트
+    it('renders cart page', async () => {
+      renderRouter('/cart');
+
+      await waitFor(() => {
+        screen.getByText(/장바구니/);
+      });
+    });
   });
 });

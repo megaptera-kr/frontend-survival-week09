@@ -35,9 +35,14 @@ export default function Header() {
     <Container>
       <h1>Shop</h1>
       <nav>
-        <Link to="products">Products</Link>
         <ul>
-          {!!categories.length
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="products">Products</Link>
+            <ul>
+              {!!categories.length
             && categories.map((category) => (
               <li key={category.id}>
                 <Link
@@ -47,6 +52,11 @@ export default function Header() {
                 </Link>
               </li>
             ))}
+            </ul>
+          </li>
+          <li>
+            <Link to="/cart">Cart</Link>
+          </li>
         </ul>
       </nav>
     </Container>
