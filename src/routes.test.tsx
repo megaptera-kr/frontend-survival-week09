@@ -44,6 +44,15 @@ describe('routes', () => {
     });
 
     // TODO #2: category ID가 있을 때
+    describe('with categoryId', () => {
+      it('renders products list by cateogryId', async () => {
+        renderRouter(`/products?categoryId=${fixtures.categories[0].id}`);
+
+        await waitFor(() => {
+          screen.getByText(/Product #1/);
+        });
+      });
+    });
   });
 
   context('when the current path is “/products/{id}”', () => {
