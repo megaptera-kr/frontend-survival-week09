@@ -1,15 +1,15 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { OrderOption } from '../../types';
+import { OrderOption } from "../../types";
 
 const Container = styled.div`
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   font-size: 1.4rem;
 `;
 
 type OptionsProps = {
   options: OrderOption[];
-}
+};
 
 export default function Options({ options }: OptionsProps) {
   if (!options.length) {
@@ -18,13 +18,7 @@ export default function Options({ options }: OptionsProps) {
 
   const text = options
     .map((option) => `${option.name}: ${option.item.name}`)
-    .join(', ');
+    .join(", ");
 
-  return (
-    <Container>
-      (
-      {text}
-      )
-    </Container>
-  );
+  return <Container>({text})</Container>;
 }

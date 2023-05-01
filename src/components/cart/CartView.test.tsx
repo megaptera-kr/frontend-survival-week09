@@ -1,15 +1,32 @@
-import { screen } from '@testing-library/react';
+import { screen } from "@testing-library/react";
 
-import { render } from '../../test-helpers';
+import { render } from "../../test-helpers";
 
-import CartView from './CartView';
+import CartView from "./CartView";
 
-import fixtures from '../../../fixtures';
+import fixtures from "../../../fixtures";
+import { nullCart } from "../../types";
 
 const context = describe;
 
-describe('CartView', () => {
-  // TODO #1: Cart가 비었을 때
+describe("CartVidew", () => {
+  context("When empty cart", () => {
+    const cart = nullCart;
 
-  // TODO #2: Cart에 line item이 있을 때
+    it("show empty text", () => {
+      render(<CartView cart={cart} />);
+
+      screen.getByText(/비었습니다/);
+    });
+  });
+
+  context("When get item", () => {
+    const { cart } = fixtures;
+
+    it("show appropriate text", () => {
+      render(<CartView cart={cart} />);
+
+      screen.getByText(cart.lineItems[0].product.name);
+    });
+  });
 });

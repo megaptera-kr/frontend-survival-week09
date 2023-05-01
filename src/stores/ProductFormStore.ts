@@ -1,17 +1,17 @@
-import { singleton } from 'tsyringe';
+import { singleton } from "tsyringe";
 
-import { Store, Action } from 'usestore-ts';
+import { Store, Action } from "usestore-ts";
 
-import { apiService } from '../services/ApiService';
+import { apiService } from "../services/ApiService";
 
-import {
-  ProductDetail, ProductOptionItem, nullProductDetail,
-} from '../types';
+import { ProductDetail, ProductOption, ProductOptionItem } from "../types";
 
 @singleton()
 @Store()
 export default class ProductFormStore {
-  product: ProductDetail = nullProductDetail;
+  productId = "";
+
+  options: ProductOption[] = [];
 
   selectedOptionItems: ProductOptionItem[] = [];
 
@@ -23,8 +23,8 @@ export default class ProductFormStore {
     this.resetDone();
 
     await apiService.addProductToCart({
-      productId: this.product.id,
-      options: this.product.options.map((option, index) => ({
+      productId: this.productId,
+      options: this.options.map((option, index) => ({
         id: option.id,
         itemId: this.selectedOptionItems[index].id,
       })),
@@ -36,8 +36,9 @@ export default class ProductFormStore {
 
   @Action()
   setProduct(product: ProductDetail) {
-    this.product = product;
-    this.selectedOptionItems = this.product.options.map((i) => i.items[0]);
+    this.productId = product.id;
+    this.options = product.options;
+    this.selectedOptionItems = this.options.map((i) => i.items[0]);
     this.quantity = 1;
     this.done = false;
   }
@@ -54,11 +55,14 @@ export default class ProductFormStore {
   }
 
   @Action()
-  changeOptionItem({ optionId, optionItemId }: {
+  changeOptionItem({
+    optionId,
+    optionItemId,
+  }: {
     optionId: string;
     optionItemId: string;
   }) {
-    this.selectedOptionItems = this.product.options.map((option, index) => {
+    this.selectedOptionItems = this.options.map((option, index) => {
       const item = this.selectedOptionItems[index];
       return option.id !== optionId
         ? item
@@ -75,9 +79,5 @@ export default class ProductFormStore {
   complete() {
     this.quantity = 1;
     this.done = true;
-  }
-
-  get price() {
-    return this.product.price * this.quantity;
   }
 }

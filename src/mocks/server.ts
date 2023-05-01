@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { setupServer } from 'msw/node';
+import { setupServer } from "msw/node";
 
-import handlers from './handlers';
-
+import handlers from "./handlers";
+// import { setupWorker } from "msw";
+// setupWorker(...handlers);
 const server = setupServer(...handlers);
 
 export default server;

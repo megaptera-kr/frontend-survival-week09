@@ -1,30 +1,46 @@
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from "@testing-library/react";
 
-import { render } from '../../../test-helpers';
+import { render } from "../../../test-helpers";
 
-import Quantity from './Quantity';
+import Quantity from "./Quantity";
 
 const store = {
   quantity: 7,
   changeQuantity: jest.fn(),
 };
 
-jest.mock('../../../hooks/useProductFormStore', () => () => [store, store]);
+jest.mock("../../../hooks/useProductFormStore", () => () => [store, store]);
 
 const context = describe;
 
-describe('Quantity', () => {
+describe("Quantity", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders quantity', () => {
+  it("renders quantity", () => {
     render(<Quantity />);
 
-    expect(screen.getByRole('textbox')).toHaveValue('7');
+    expect(screen.getByRole("textbox")).toHaveValue("7");
   });
 
-  // TODO #1: + 버튼이 눌렸을 때
+  context("when '+' button is clicked", () => {
+    it("calls action", () => {
+      render(<Quantity />);
 
-  // TODO #2: - 버튼이 눌렸을 때
+      fireEvent.click(screen.getByRole("button", { name: "+" }));
+
+      expect(store.changeQuantity).toBeCalledWith(7 + 1);
+    });
+  });
+
+  context("when '-' button is clicked", () => {
+    it("calls action", () => {
+      render(<Quantity />);
+
+      fireEvent.click(screen.getByRole("button", { name: "-" }));
+
+      expect(store.changeQuantity).toBeCalledWith(7 - 1);
+    });
+  });
 });
