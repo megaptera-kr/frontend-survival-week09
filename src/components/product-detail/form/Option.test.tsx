@@ -36,6 +36,33 @@ describe('Option', () => {
   });
 
   // TODO #1: 선택이 바뀌었을 때
+  context('when selection is changed', () => {
+    it('calls “onChange” callback', () => {
+      renderOption();
+
+      const [, item] = option.items;
+
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: item.id },
+      });
+
+      expect(handleChange).toBeCalledWith({
+        optionId: option.id,
+        optionItemId: item.id,
+      });
+    });
+  });
 
   // TODO #2: 선택이 잘못됐을 때
+  context('when selection is incorrect', () => {
+    it("doesn't call “onChange” callback", () => {
+      renderOption();
+
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: 'xxx' },
+      });
+
+      expect(handleChange).not.toBeCalled();
+    });
+  });
 });

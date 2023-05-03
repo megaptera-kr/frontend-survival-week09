@@ -5,7 +5,7 @@ import { Store, Action } from 'usestore-ts';
 import { apiService } from '../services/ApiService';
 
 import {
-  ProductDetail, ProductOptionItem, nullProductDetail,
+  ProductDetail, ProductOptionItem, nullProductDetail, ProductOption,
 } from '../types';
 
 @singleton()
@@ -14,6 +14,8 @@ export default class ProductFormStore {
   product: ProductDetail = nullProductDetail;
 
   selectedOptionItems: ProductOptionItem[] = [];
+
+  options: ProductOption[] = [];
 
   quantity = 1;
 
@@ -37,6 +39,7 @@ export default class ProductFormStore {
   @Action()
   setProduct(product: ProductDetail) {
     this.product = product;
+    this.options = product.options;
     this.selectedOptionItems = this.product.options.map((i) => i.items[0]);
     this.quantity = 1;
     this.done = false;

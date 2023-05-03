@@ -32,4 +32,23 @@ describe('Options', () => {
   });
 
   // TODO: 선택이 바뀌었을 때(힌트: changeOptionItem 호출 여부를 이용)
+  context('when selection is changed', () => {
+    it('calls “changeOptionItem” action', () => {
+      render(<Options />);
+
+      const [option] = options;
+      const [, item] = option.items;
+
+      const [combobox] = screen.getAllByRole('combobox');
+
+      fireEvent.change(combobox, {
+        target: { value: item.id },
+      });
+
+      expect(store.changeOptionItem).toBeCalledWith({
+        optionId: option.id,
+        optionItemId: item.id,
+      });
+    });
+  });
 });
