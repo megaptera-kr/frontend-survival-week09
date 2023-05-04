@@ -1,4 +1,5 @@
 import Layout from './components/Layout';
+import path from './constants/path';
 
 import HomePage from './pages/HomePage';
 import ProductListPage from './pages/ProductListPage';
@@ -9,10 +10,10 @@ const routes = [
   {
     element: <Layout />,
     children: [
-      { path: '/', element: <HomePage /> },
-      { path: '/products', element: <ProductListPage /> },
-      { path: '/products/:id', element: <ProductDetailPage /> },
-      { path: '/cart', element: <CartPage /> },
+      { path: path.root, element: <HomePage /> },
+      { path: path.products, element: <ProductListPage /> },
+      { path: `${path.products}/:id`, element: <ProductDetailPage /> },
+      { path: path.cart, element: <CartPage /> },
     ],
   },
 ];

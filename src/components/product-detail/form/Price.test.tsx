@@ -8,7 +8,7 @@ import ProductFormStore from '../../../stores/ProductFormStore';
 
 import numberFormat from '../../../utils/numberFormat';
 
-import fixtures from '../../../../fixtures';
+import * as fixtures from '../../../../fixtures';
 
 const [product] = fixtures.products;
 

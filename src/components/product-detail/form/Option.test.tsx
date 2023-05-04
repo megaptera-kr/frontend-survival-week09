@@ -4,7 +4,7 @@ import { render } from '../../../test-helpers';
 
 import Option from './Option';
 
-import fixtures from '../../../../fixtures';
+import * as fixtures from '../../../../fixtures';
 
 const context = describe;
 
@@ -35,7 +35,41 @@ describe('Option', () => {
     screen.getByRole('combobox');
   });
 
-  // TODO #1: 선택이 바뀌었을 때
+  context('when select correct option', () => {
+    const otherOptionItem = option.items[1];
 
-  // TODO #2: 선택이 잘못됐을 때
+    it('handleChange is called', () => {
+      renderOption();
+
+      const comboBoxEl = screen.getByRole('combobox');
+
+      fireEvent.change(comboBoxEl, {
+        target: {
+          value: 'option-item-02',
+        },
+      });
+
+      expect(handleChange).toHaveBeenCalled();
+      expect(handleChange).toHaveBeenCalledWith({
+        optionId: option.id,
+        optionItemId: otherOptionItem.id,
+      });
+    });
+  });
+
+  context('when select incorrect option', () => {
+    it('handleChange is not called', () => {
+      renderOption();
+
+      const comboBoxEl = screen.getByRole('combobox');
+
+      fireEvent.change(comboBoxEl, {
+        target: {
+          value: 'incorrect-alue',
+        },
+      });
+
+      expect(handleChange).not.toHaveBeenCalled();
+    });
+  });
 });

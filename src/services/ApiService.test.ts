@@ -1,33 +1,59 @@
-import ApiService from './ApiService';
+import apiService from './ApiService';
 
-import fixtures from '../../fixtures';
+import * as fixtures from '../../fixtures';
 
 const context = describe;
 
 describe('ApiService', () => {
-  // TODO: 테스트 대상 생성
-
   test('fetchCategories', async () => {
-    // 이걸 기본 모양으로 참고해서 작성해보세요.
-    // const categories = await apiService.fetchCategories();
-    // expect(categories).not.toHaveLength(0);
+    const categories = await apiService.fetchCategories();
+
+    expect(categories).not.toHaveLength(0);
   });
 
   describe('fetchProducts', () => {
-    // TODO #1: category ID가 없을 때
+    context('without categoryId params', () => {
+      it('fetching all products', async () => {
+        const products = await apiService.fetchProducts();
 
-    // TODO #2: category ID가 있을 때
+        expect(products).toHaveLength(2);
+        expect(products).toEqual(fixtures.productSummaries);
+      });
+    });
+
+    context('with categoryId params', () => {
+      it('fetching all products', async () => {
+        const [{ id: categoryId }] = fixtures.categories;
+        const products = await apiService.fetchProducts(categoryId);
+
+        expect(products).toHaveLength(1);
+        expect(products).toEqual([fixtures.productSummaries[0]]);
+      });
+    });
   });
 
   test('fetchProduct', async () => {
-    // TODO: fetchProduct 테스트
+    const [fakeProduct] = fixtures.products;
+    const product = await apiService.fetchProduct(fakeProduct.id);
+
+    expect(product).toEqual(fakeProduct);
   });
 
   test('fetchCart', async () => {
-    // TODO: fetchCart 테스트
+    const fakeCart = fixtures.cart;
+    const cart = await apiService.fetchCart();
+
+    expect(cart).toEqual(fakeCart);
   });
 
   test('addProductToCart', async () => {
-    // TODO: addProductToCart 테스트
+    const reqData = {
+      productId: 'test',
+      options: [{ id: 'test', itemId: 'test' }],
+      quantity: 1,
+    };
+    const data = await apiService.addProductToCart(reqData);
+    // ?? 뭘 테스트하는거지
+    expect(data).toBeUndefined();
   });
 });

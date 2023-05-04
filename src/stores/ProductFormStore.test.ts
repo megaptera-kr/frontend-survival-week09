@@ -1,16 +1,9 @@
 import ProductFormStore from './ProductFormStore';
 
-import fixtures from '../../fixtures';
+import apiService from '../services/ApiService';
+import * as fixtures from '../../fixtures';
 
-const addProductToCart = jest.fn();
-
-jest.mock('../services/ApiService', () => ({
-  get apiService() {
-    return {
-      addProductToCart,
-    };
-  },
-}));
+jest.mock('../services/ApiService');
 
 const context = describe;
 
@@ -107,6 +100,8 @@ describe('ProductFormStore', () => {
   });
 
   describe('addToCart', () => {
+    const addProductToCart = jest.fn();
+    jest.mocked(apiService.addProductToCart).mockImplementation(addProductToCart);
     const [product] = fixtures.products;
 
     beforeEach(() => {
