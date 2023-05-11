@@ -26,11 +26,11 @@ export default function Quantity() {
 
   return (
     <Container>
-      <Button onClick={handleClickDecrease}>
+      <Button aria-label="decrease" onClick={handleClickDecrease}>
         -
       </Button>
       <input type="text" value={quantity} readOnly />
-      <Button onClick={handleClickIncrease}>
+      <Button aria-label="increase" onClick={handleClickIncrease}>
         +
       </Button>
     </Container>

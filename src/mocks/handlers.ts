@@ -1,28 +1,27 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { rest } from 'msw';
 
-import { ProductSummary } from '../types';
-
-import fixtures from '../../fixtures';
-
-const BASE_URL = 'https://shop-demo-api-01.fly.dev';
-
-const productSummaries: ProductSummary[] = fixtures.products
-  .map((product) => ({
-    id: product.id,
-    category: product.category,
-    thumbnail: product.images[0],
-    name: product.name,
-    price: product.price,
-  }));
+import * as fixtures from '../../fixtures';
+import { BASE_URL } from '../constants/common';
 
 const handlers = [
   rest.get(`${BASE_URL}/categories`, (req, res, ctx) => (
     res(ctx.json({ categories: fixtures.categories }))
   )),
-  rest.get(`${BASE_URL}/products`, (req, res, ctx) => (
-    res(ctx.json({ products: productSummaries }))
-  )),
+  rest.get(`${BASE_URL}/products`, (req, res, ctx) => {
+    const categoryId = req.url.searchParams.get('categoryId');
+
+    if (categoryId) {
+      return res(ctx.json(
+        {
+          products: fixtures.productSummaries.filter(
+            (product) => product.category.id === categoryId as string,
+          ),
+        },
+      ));
+    }
+    return res(ctx.json({ products: fixtures.productSummaries }));
+  }),
   rest.get(`${BASE_URL}/products/:id`, (req, res, ctx) => {
     const product = fixtures.products.find((i) => i.id === req.params.id);
     if (!product) {

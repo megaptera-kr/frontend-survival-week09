@@ -24,7 +24,25 @@ describe('Quantity', () => {
     expect(screen.getByRole('textbox')).toHaveValue('7');
   });
 
-  // TODO #1: + 버튼이 눌렸을 때
+  context('with "+" button is clicked', () => {
+    it('couchangeQuantity is called', async () => {
+      render(<Quantity />);
 
-  // TODO #2: - 버튼이 눌렸을 때
+      fireEvent.click(screen.getByRole('button', { name: 'increase' }));
+
+      expect(store.changeQuantity).toHaveBeenCalledWith(8);
+    });
+  });
+
+  context('with "-" button is clicked', () => {
+    it('changeQuantity is called', () => {
+      render(<Quantity />);
+
+      const button = screen.getByRole('button', { name: 'decrease' });
+
+      fireEvent.click(button);
+
+      expect(store.changeQuantity).toHaveBeenCalledWith(6);
+    });
+  });
 });

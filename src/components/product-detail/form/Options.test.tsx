@@ -4,7 +4,7 @@ import { render } from '../../../test-helpers';
 
 import Options from './Options';
 
-import fixtures from '../../../../fixtures';
+import * as fixtures from '../../../../fixtures';
 
 const [product] = fixtures.products;
 const { options } = product;
@@ -31,5 +31,17 @@ describe('Options', () => {
     expect(screen.getAllByRole('combobox')).toHaveLength(options.length);
   });
 
-  // TODO: 선택이 바뀌었을 때(힌트: changeOptionItem 호출 여부를 이용)
+  context('when selectedItem is changed', () => {
+    it('changeOptionItem is called', () => {
+      render(<Options />);
+
+      fireEvent.change(screen.getByRole('combobox', { name: 'Color' }), {
+        target: {
+          value: 'option-item-02',
+        },
+      });
+
+      expect(store.changeOptionItem).toBeCalled();
+    });
+  });
 });

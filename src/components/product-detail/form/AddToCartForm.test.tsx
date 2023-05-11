@@ -8,7 +8,7 @@ import AddToCartForm from './AddToCartForm';
 
 import ProductDetailStore from '../../../stores/ProductDetailStore';
 
-import fixtures from '../../../../fixtures';
+import * as fixtures from '../../../../fixtures';
 
 test('AddToCartForm', async () => {
   container.clearInstances();

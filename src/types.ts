@@ -67,7 +67,21 @@ export type LineItem = {
   totalPrice: number;
 }
 
+export type AddToProductCartRequest = {
+  productId: string;
+  options: {
+    id: string;
+    itemId: string;
+  }[];
+  quantity: number;
+};
+
 export type Cart = {
   lineItems: LineItem[];
   totalPrice: number;
 }
+
+export const nullCart: Cart = {
+  lineItems: [],
+  totalPrice: 0,
+};

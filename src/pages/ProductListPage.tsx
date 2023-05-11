@@ -1,1 +1,5 @@
-// TODO: 상품 목록 보여주기
+import Products from '../components/product-list/Products';
+
+export default function ProductListPage() {
+  return <Products />;
+}

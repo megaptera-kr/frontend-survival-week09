@@ -1,6 +1,6 @@
 import { Cart } from '../src/types';
 
-const cart: Cart = {
+export const cart: Cart = {
   lineItems: [
     {
       id: 'line-item-01',

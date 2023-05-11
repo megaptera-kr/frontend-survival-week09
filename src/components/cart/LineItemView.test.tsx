@@ -4,7 +4,7 @@ import { render } from '../../test-helpers';
 
 import LineItemView from './LineItemView';
 
-import fixtures from '../../../fixtures';
+import * as fixtures from '../../../fixtures';
 
 describe('LineItemView', () => {
   it('renders a line item', () => {

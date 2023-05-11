@@ -1,1 +1,3 @@
-// TODO: numberFormat 유틸 함수
+const numberFormat = (number: number): string => new Intl.NumberFormat().format(number);
+
+export default numberFormat;
