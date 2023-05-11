@@ -1,18 +1,17 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from "@testing-library/react";
 
-import { container } from 'tsyringe';
+import { container } from "tsyringe";
 
-import { render } from '../../../test-helpers';
+import { render } from "../../../test-helpers";
 
-import AddToCartForm from './AddToCartForm';
+import AddToCartForm from "./AddToCartForm";
 
-import ProductDetailStore from '../../../stores/ProductDetailStore';
+import ProductDetailStore from "../../../stores/ProductDetailStore";
 
-import fixtures from '../../../../fixtures';
+import fixtures from "../../../../fixtures";
 
-test('AddToCartForm', async () => {
+test("AddToCartForm", async () => {
   container.clearInstances();
-
   const [product] = fixtures.products;
 
   const productDetailStore = container.resolve(ProductDetailStore);
@@ -21,7 +20,7 @@ test('AddToCartForm', async () => {
 
   render(<AddToCartForm />);
 
-  fireEvent.click(screen.getByText('장바구니에 담기'));
+  fireEvent.click(screen.getByText("장바구니에 담기"));
 
   await waitFor(() => {
     screen.getByText(/장바구니에 담았습니다/);

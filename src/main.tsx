@@ -1,28 +1,28 @@
-import 'reflect-metadata';
+import "reflect-metadata";
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-import { Reset } from 'styled-reset';
-import { ThemeProvider } from 'styled-components';
+import { Reset } from "styled-reset";
+import { ThemeProvider } from "styled-components";
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import routes from './routes';
+import routes from "./routes";
 
-import defaultTheme from './styles/defaultTheme';
-import GlobalStyle from './styles/GlobalStyle';
+import defaultTheme from "./styles/defaultTheme";
+import GlobalStyle from "./styles/GlobalStyle";
 
 const router = createBrowserRouter(routes);
 
 function main() {
-  const container = document.getElementById('root');
+  const container = document.getElementById("root");
   if (!container) {
     return;
   }
 
   const root = ReactDOM.createRoot(container);
-  root.render((
+  root.render(
     <React.StrictMode>
       <ThemeProvider theme={defaultTheme}>
         <Reset />
@@ -30,7 +30,7 @@ function main() {
         <RouterProvider router={router} />
       </ThemeProvider>
     </React.StrictMode>
-  ));
+  );
 }
 
 main();

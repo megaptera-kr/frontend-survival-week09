@@ -1,7 +1,7 @@
-Feature('Welcome');
+Feature("Welcome");
 
-Scenario('Visit the home page', ({ I }) => {
-  I.amOnPage('/');
+Scenario("Visit the home page", ({ I }) => {
+  I.amOnPage("/");
 
-  I.see('Hello, world!');
+  I.see("Hello, world!");
 });

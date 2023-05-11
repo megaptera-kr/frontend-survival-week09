@@ -1,14 +1,14 @@
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from "@testing-library/react";
 
-import { render } from '../../../test-helpers';
+import { render } from "../../../test-helpers";
 
-import Option from './Option';
+import Option from "./Option";
 
-import fixtures from '../../../../fixtures';
+import fixtures from "../../../../fixtures";
 
 const context = describe;
 
-describe('Option', () => {
+describe("Option", () => {
   const [product] = fixtures.products;
   const [option] = product.options;
   const [selectedItem] = option.items;
@@ -20,22 +20,47 @@ describe('Option', () => {
   });
 
   function renderOption() {
-    render((
+    render(
       <Option
         option={option}
         selectedItem={selectedItem}
         onChange={handleChange}
       />
-    ));
+    );
   }
 
-  it('renders combobox', () => {
+  it("renders combobox", () => {
     renderOption();
 
-    screen.getByRole('combobox');
+    screen.getByRole("combobox");
   });
 
-  // TODO #1: 선택이 바뀌었을 때
+  context("when selection is changed", () => {
+    it("calls “onChange” callback", () => {
+      renderOption();
 
-  // TODO #2: 선택이 잘못됐을 때
+      const [, item] = option.items;
+
+      fireEvent.change(screen.getByRole("combobox"), {
+        target: { value: item.id },
+      });
+
+      expect(handleChange).toBeCalledWith({
+        optionId: option.id,
+        optionItemId: item.id,
+      });
+    });
+  });
+
+  context("when wrong selection", () => {
+    it("target wrong value change", () => {
+      renderOption();
+
+      fireEvent.change(screen.getByRole("combobox"), {
+        target: { value: "xxx" },
+      });
+
+      expect(handleChange).not.toBeCalled();
+    });
+  });
 });
