@@ -24,7 +24,23 @@ describe('Quantity', () => {
     expect(screen.getByRole('textbox')).toHaveValue('7');
   });
 
-  // TODO #1: + 버튼이 눌렸을 때
+  context('+ 버튼이 눌렸을 때', () => {
+    it('수량이 + 버튼을 누른 만큼 올라간다', () => {
+      render(<Quantity />);
 
-  // TODO #2: - 버튼이 눌렸을 때
+      fireEvent.click(screen.getByRole('button', { name: '+' }));
+
+      expect(store.changeQuantity).toBeCalledWith(7 + 1);
+    });
+  });
+
+  context('- 버튼이 눌렸을 때', () => {
+    it('수량이 - 버튼을 누른 만큼 내려간다', () => {
+      render(<Quantity />);
+
+      fireEvent.click(screen.getByRole('button', { name: '-' }));
+
+      expect(store.changeQuantity).toBeCalledWith(7 - 1);
+    });
+  });
 });

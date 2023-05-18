@@ -31,5 +31,23 @@ describe('Options', () => {
     expect(screen.getAllByRole('combobox')).toHaveLength(options.length);
   });
 
-  // TODO: 선택이 바뀌었을 때(힌트: changeOptionItem 호출 여부를 이용)
+  context('옵션이 바뀌면', () => {
+    it('changeOptionItem 함수가 호출되고 선택한 옵션이 화면에 나온다', () => {
+      render(<Options />);
+
+      const [option] = options;
+      const [, item] = option.items;
+
+      const [combobox] = screen.getAllByRole('combobox');
+
+      fireEvent.change(combobox, {
+        target: { value: item.id },
+      });
+
+      expect(store.changeOptionItem).toBeCalledWith({
+        optionId: option.id,
+        optionItemId: item.id,
+      });
+    });
+  });
 });
