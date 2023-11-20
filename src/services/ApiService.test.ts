@@ -5,29 +5,59 @@ import fixtures from '../../fixtures';
 const context = describe;
 
 describe('ApiService', () => {
-  // TODO: 테스트 대상 생성
+  let apiService: ApiService;
+
+  beforeEach(() => {
+    apiService = new ApiService();
+  });
 
   test('fetchCategories', async () => {
-    // 이걸 기본 모양으로 참고해서 작성해보세요.
-    // const categories = await apiService.fetchCategories();
-    // expect(categories).not.toHaveLength(0);
+    const categories = await apiService.fetchCategories();
+    expect(categories).not.toHaveLength(0);
   });
 
   describe('fetchProducts', () => {
-    // TODO #1: category ID가 없을 때
+    context('category ID가 없을 때', () => {
+      it('모든 Products를 볼 수 있다', async () => {
+        const products = await apiService.fetchProducts();
 
-    // TODO #2: category ID가 있을 때
+        expect(products).not.toHaveLength(0);
+      });
+    });
+
+    context('category ID가 있을 때', () => {
+      const categoryId = fixtures.categories[0].id;
+
+      it('products를 리턴한다', async () => {
+        const products = await apiService.fetchProducts({ categoryId });
+
+        expect(products).not.toHaveLength(0);
+      });
+    });
   });
 
   test('fetchProduct', async () => {
-    // TODO: fetchProduct 테스트
+    const product = await apiService.fetchProduct({ productId: fixtures.products[0].id });
+
+    expect(product.name).toBe(fixtures.products[0].name);
   });
 
   test('fetchCart', async () => {
-    // TODO: fetchCart 테스트
+    const cart = await apiService.fetchCart();
+
+    expect(cart.lineItems).not.toHaveLength(0);
   });
 
   test('addProductToCart', async () => {
-    // TODO: addProductToCart 테스트
+    const pickedProduct = fixtures.products[0];
+
+    await apiService.addProductToCart({
+      productId: pickedProduct.id,
+      options: [{
+        id: pickedProduct.options[0].id,
+        itemId: pickedProduct.options[0].items[0].id,
+      }],
+      quantity: 1,
+    });
   });
 });
